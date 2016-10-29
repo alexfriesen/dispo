@@ -45,14 +45,12 @@ var defaults = {
   mail: {
     from: 'Dispo <dispo@example.com>'
   }
+
+  /**
+   * Mailer
+   */
 };
-
-/**
- * Mailer
- */
-
 var Mailer = function () {
-
   /**
    * Creates an instance of Mailer.
    *

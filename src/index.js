@@ -39,7 +39,6 @@ export const getJob = promisify(kue.Job.get)
  * Dispo Scheduler
  */
 export default class Dispo {
-
   /**
    * Creates an instance of Dispo.
    *
@@ -117,12 +116,12 @@ export default class Dispo {
     this._queue.watchStuckJobs(5e3)
 
     if (NODE_ENV !== 'test') {
-      this._queue.on('job start', async (id) => await this._handleStart(id))
-      this._queue.on('job failed attempt', async (id, msg) => await this._handleFailedAttempt(id, msg))
-      this._queue.on('job failed', async (id, msg) => await this._handleFailed(id, msg))
+      this._queue.on('job start', async (id) => { await this._handleStart(id) })
+      this._queue.on('job failed attempt', async (id, msg) => { await this._handleFailedAttempt(id, msg) })
+      this._queue.on('job failed', async (id, msg) => { await this._handleFailed(id, msg) })
     }
 
-    this._queue.on('job complete', async (id) => await this._handleComplete(id))
+    this._queue.on('job complete', async (id) => { await this._handleComplete(id) })
   }
 
   /**

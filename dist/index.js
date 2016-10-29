@@ -74,27 +74,25 @@ var defaultConfig = {
     logging: { path: 'log' },
     mailer: null
   }
-};
 
-/**
- * Promisified version of `kue.Job.rangeByType`
- * @type {Function}
- */
-var getJobsByType = (0, _bluebird.promisify)(_kue2.default.Job.rangeByType);
+  /**
+   * Promisified version of `kue.Job.rangeByType`
+   * @type {Function}
+   */
+};var getJobsByType = (0, _bluebird.promisify)(_kue2.default.Job.rangeByType
 
 /**
  * Promisified version of `kue.Job.get`
  *
  * @type {Function}
  */
-var getJob = exports.getJob = (0, _bluebird.promisify)(_kue2.default.Job.get);
+);var getJob = exports.getJob = (0, _bluebird.promisify)(_kue2.default.Job.get
 
 /**
  * Dispo Scheduler
  */
-
+);
 var Dispo = function () {
-
   /**
    * Creates an instance of Dispo.
    *
@@ -304,9 +302,6 @@ var Dispo = function () {
                     return _this._handleStart(id);
 
                   case 2:
-                    return _context3.abrupt('return', _context3.sent);
-
-                  case 3:
                   case 'end':
                     return _context3.stop();
                 }
@@ -328,9 +323,6 @@ var Dispo = function () {
                     return _this._handleFailedAttempt(id, msg);
 
                   case 2:
-                    return _context4.abrupt('return', _context4.sent);
-
-                  case 3:
                   case 'end':
                     return _context4.stop();
                 }
@@ -352,9 +344,6 @@ var Dispo = function () {
                     return _this._handleFailed(id, msg);
 
                   case 2:
-                    return _context5.abrupt('return', _context5.sent);
-
-                  case 3:
                   case 'end':
                     return _context5.stop();
                 }
@@ -378,9 +367,6 @@ var Dispo = function () {
                   return _this._handleComplete(id);
 
                 case 2:
-                  return _context6.abrupt('return', _context6.sent);
-
-                case 3:
                 case 'end':
                   return _context6.stop();
               }
@@ -694,7 +680,7 @@ var Dispo = function () {
       var _ref14 = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee13(name, options) {
         var _this3 = this;
 
-        var attempts, cron, delay, backoff, isScheduled;
+        var attempts, cron, delay, backoff, isScheduled, job;
         return _regenerator2.default.wrap(function _callee13$(_context13) {
           while (1) {
             switch (_context13.prev = _context13.next) {
@@ -711,22 +697,21 @@ var Dispo = function () {
 
 
                 if (!cron || !isScheduled) {
-                  (function () {
-                    var job = _this3._queue.create(name, (0, _assign2.default)(options, { name: name })).delay(delay || _this3._calculateDelay(cron)).attempts(attempts);
+                  job = this._queue.create(name, (0, _assign2.default)(options, { name: name })).delay(delay || this._calculateDelay(cron)).attempts(attempts);
 
-                    if (backoff) {
-                      console.log(name, backoff);
-                      job.backoff((0, _util.parseBackoff)(backoff));
+
+                  if (backoff) {
+                    console.log(name, backoff);
+                    job.backoff((0, _util.parseBackoff)(backoff));
+                  }
+
+                  job.save(function (err) {
+                    if (err) {
+                      throw new Error('Job save: ' + err.message);
+                    } else if (NODE_ENV !== 'test') {
+                      _this3._logger.logQueued(job);
                     }
-
-                    job.save(function (err) {
-                      if (err) {
-                        throw new Error('Job save: ' + err.message);
-                      } else if (NODE_ENV !== 'test') {
-                        _this3._logger.logQueued(job);
-                      }
-                    });
-                  })();
+                  });
                 }
 
               case 6:

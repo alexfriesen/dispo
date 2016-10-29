@@ -64,12 +64,11 @@ var mapLevelToColor = {
   info: 'white',
   verbose: 'cyan',
   warn: 'yellow'
-};
 
-/**
- * Default logger options
- */
-var defaults = {
+  /**
+   * Default logger options
+   */
+};var defaults = {
   winstonConfig: {
     level: 'verbose',
     transports: [new _winston6.default.transports.Console({
@@ -86,16 +85,15 @@ var defaults = {
       }
     }), new _winston6.default.transports.File({ filename: 'log/scheduler.log' })]
   }
-};
 
-/**
- * Returns human readable time of the next job run based on the jobs creation date and delay
- *
- * @param {String} createdAt - The jobs createdAt timestamp
- * @param {String} delay - The jobs delay
- * @return {String} Human readable time of the next job run
- */
-var runsIn = function runsIn(createdAt, delay) {
+  /**
+   * Returns human readable time of the next job run based on the jobs creation date and delay
+   *
+   * @param {String} createdAt - The jobs createdAt timestamp
+   * @param {String} delay - The jobs delay
+   * @return {String} Human readable time of the next job run
+   */
+};var runsIn = function runsIn(createdAt, delay) {
   return (0, _prettyMs2.default)(Number(createdAt) + Number(delay) - Date.now());
 };
 

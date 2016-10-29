@@ -17,7 +17,6 @@ const defaults = {
  * Mailer
  */
 export default class Mailer {
-
   /**
    * Creates an instance of Mailer.
    *
